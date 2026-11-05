@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+/* Byzon design tokens: sampled from the reference video (SPEC §2.4) */
+:root {
+  --bg-app: #000;
+  --surface-1: #0c0c0e;
+  --surface-2: #141417;
+  --surface-3: #1c1c20;
+  --surface-4: #2a2a2f;
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+  --text-1: #fff;
+  --text-2: rgba(255, 255, 255, 0.62);
+  --text-3: rgba(255, 255, 255, 0.38);
+  --accent: #2f7bf6;
+  --accent-glow: #1e4fd8;
+  --accent-deep: #0a1a4a;
+  --negative: #f0483e;
+  --gold-1: #f7c94b;
+  --gold-2: #d9a21e;
+  --lime: #d4f25a;
+  --cyan: #4fd1e8;
+}
+
+@theme inline {
+  --color-app: var(--bg-app);
+  --color-s1: var(--surface-1);
+  --color-s2: var(--surface-2);
+  --color-s3: var(--surface-3);
+  --color-s4: var(--surface-4);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-t1: var(--text-1);
+  --color-t2: var(--text-2);
+  --color-t3: var(--text-3);
+  --color-accent: var(--accent);
+  --color-negative: var(--negative);
+  --color-gold: var(--gold-1);
+  --color-lime: var(--lime);
+  --color-cyan: var(--cyan);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --radius-frame: 24px;
+  --radius-card: 22px;
+  --radius-inner: 16px;
+  --radius-input: 12px;
+}
+
+html,
+body {
+  background: var(--bg-app);
+  color: var(--text-1);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+.num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Glass card with the faint blue bottom gradient and 24px grid seen on the reference cards */
+.card {
+  position: relative;
+  border-radius: var(--radius-card);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.card-glass {
+  position: relative;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-strong);
+  background:
+    linear-gradient(180deg, rgba(20, 20, 26, 0.92) 0%, rgba(14, 22, 44, 0.92) 100%),
+    var(--surface-2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 20px 60px -30px rgba(30, 79, 216, 0.45);
+  overflow: hidden;
+}
+.card-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 40%, #000 100%);
+}
+
+.pill-white {
+  background: #fff;
+  color: #000;
+  border-radius: 999px;
+  font-weight: 600;
+  transition:
+    transform 150ms ease,
+    background 150ms ease;
+}
+.pill-white:hover {
+  background: #e9e9ee;
+}
+.pill-white:active {
+  transform: scale(0.97);
+}
+
+.gold-chip {
+  background: linear-gradient(160deg, var(--gold-1) 0%, var(--gold-2) 100%);
+  color: #1a1204;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.18),
+    0 6px 0 #8a6510,
+    0 14px 24px -6px rgba(217, 162, 30, 0.45);
+  transform: perspective(300px) rotateX(10deg) rotateZ(-4deg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-4) transparent;
+}
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
